@@ -1,10 +1,8 @@
 #include "operation.h"
 
 #include <fcntl.h>
-#include <cstdio>
 #include <sys/mman.h>
 #include <unistd.h>
-#include <cstring>
 #include <cstdint>
 #include <filesystem>
 #include <thread>
@@ -24,13 +22,12 @@ Operation::Operation(const char *filename_, const std::vector<unsigned int> &pos
         close(fd);
         assert(false);
     }
-    int count_positions = 0;
 
     std::vector<std::thread> threads;
     for (size_t i = 0; i < positions.size(); ++i) {
 
-        threads.emplace_back(std::thread(&Operation::thread_function, this, count_positions, region, file_size,
-                             positions[count_positions++]));
+        threads.emplace_back(std::thread(&Operation::thread_function, this, i, region, file_size,
+                                         positions[i]));
     }
     for (size_t i = 0; i < positions.size(); ++i) {
         threads[i].join();
@@ -66,12 +63,10 @@ void Operation::thread_function(const int &count, const char *region, const uint
     }
 }
 
-void Operation::get_numbers() {
+void Operation::get_numbers(std::vector<std::pair<long double, long double>> &vec) {
 
     for (auto &i: list) {
-        std::cout << "Позиция :   " << i.get_position() << "  Cкользящее среднее  :"
-                  << i.get_moving_average()
-                  << "   Стандартное отклонение  :" << i.get_standart_deviation() << '\n';
+        vec.emplace_back(i.get_moving_average(),i.get_standart_deviation());
     }
 }
 

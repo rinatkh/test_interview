@@ -6,20 +6,17 @@
 class Container {
 private:
     struct Element {
-        Element();
-        ~Element() = default;
+        long double data = 0.0;
+        long double sum = 0.0;
+        long double square_sum = 0.0;
+        unsigned long position = 0;
 
-        long double data;
-        long double sum;
-        long double square_sum;
-        unsigned long position;
-
-        long double moving_average;
-        long double standart_deviation;
+        long double moving_average = 0.0;
+        long double standart_deviation = 0.0;
     };
 
 public:
-    Container();
+    Container() = default;
     ~Container() = default;
     Element elem;
 

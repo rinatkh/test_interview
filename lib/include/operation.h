@@ -4,7 +4,6 @@
 
 #include <iostream>
 
-
 class Operation {
 
 private:
@@ -22,5 +21,6 @@ public:
 
     ~Operation() = default;
 
-    void get_numbers();
+    void get_numbers(std::vector<std::pair<long double, long double>> &vec);
+
 };
