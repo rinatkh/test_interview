@@ -7,6 +7,7 @@ class Container {
 private:
     struct Element {
         Element();
+        ~Element() = default;
 
         long double data;
         long double sum;
@@ -19,7 +20,7 @@ private:
 
 public:
     Container();
-
+    ~Container() = default;
     Element elem;
 
     void add(const long double &data_, const unsigned long &position_);
@@ -27,4 +28,6 @@ public:
     long double get_moving_average();
 
     long double get_standart_deviation();
+
+    unsigned long get_position();
 };
